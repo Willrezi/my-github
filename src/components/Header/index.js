@@ -11,7 +11,7 @@ class Header extends Component {
             className="header-title"
             onClick={() => this.props.history.push("/home")}
           >
-            Mon Github
+            Mon GitHub
           </h2>
         </div>
       </Fragment>

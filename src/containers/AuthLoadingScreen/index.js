@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from "react";
+
+import key from "../../constants/key";
 import "./style.css";
 
 class AuthLoadingScreen extends Component {
@@ -6,10 +8,18 @@ class AuthLoadingScreen extends Component {
     return (
       <Fragment>
         <div className="auth-container">
-          <button className="auth-button">
-            <i class="fab fa-github fa-2x" />
+          <a
+            className="auth-button"
+            href={
+              "https://github.com/login/oauth/authorize?client_id=" +
+              key.CLIENT_ID +
+              "&scope=user&redirect_uri=" +
+              key.REDIRECT_URI
+            }
+          >
+            <i className="fab fa-github fa-2x" />
             Se connecter avec GitHub
-          </button>
+          </a>
         </div>
       </Fragment>
     );
