@@ -19,7 +19,7 @@ class Home extends Component {
     const code =
       window.location.href.match(/\?code=(.*)/) &&
       window.location.href.match(/\?code=(.*)/)[1];
-    console.log(code);
+    // console.log(code);
     if (code) {
       axios
         .get("https://w-github.herokuapp.com/authenticate/" + code)
@@ -47,7 +47,7 @@ class Home extends Component {
         .then(async () => {
           await setTimeout(() => {
             axios
-              .get(this.state.url + "/repos", {
+              .get(this.state.url + "/repos?sort=created", {
                 headers: { Authorization: "Bearer " + this.state.token }
               })
               .then(response => {
