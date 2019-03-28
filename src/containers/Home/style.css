@@ -12,11 +12,12 @@
 .name-container {
   font-family: "montserrat", sans-serif;
   margin-bottom: 5px;
+  color: #7469fb;
 }
 
 .login-container {
   font-family: "montserrat", sans-serif;
-  color: #666666;
+  color: #c2c2c2;
   margin: 0;
 }
 

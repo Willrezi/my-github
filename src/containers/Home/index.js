@@ -6,6 +6,7 @@ import Repos from "../../components/Repos";
 
 class Home extends Component {
   state = {
+    code: "",
     token: "",
     login: "",
     name: "",
@@ -19,7 +20,6 @@ class Home extends Component {
     const code =
       window.location.href.match(/\?code=(.*)/) &&
       window.location.href.match(/\?code=(.*)/)[1];
-    // console.log(code);
     if (code) {
       axios
         .get("https://w-github.herokuapp.com/authenticate/" + code)

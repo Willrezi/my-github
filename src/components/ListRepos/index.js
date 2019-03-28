@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { withRouter, Link } from "react-router-dom";
-import axios from "axios";
 
 import moment from "moment";
 import "moment/locale/fr";
