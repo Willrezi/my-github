@@ -1,0 +1,17 @@
+.list-container {
+  display: flex;
+  flex-direction: column;
+  font-family: "montserrat", sans-serif;
+}
+
+.list-container > h4 {
+  text-decoration: underline;
+
+  font-size: 30px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 20px;
+}

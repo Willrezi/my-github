@@ -2,16 +2,22 @@ import React, { Component, Fragment } from "react";
 import axios from "axios";
 
 import "./style.css";
+import Repos from "../../components/Repos";
 
 class Home extends Component {
   state = {
     token: "",
     login: "",
     name: "",
-    avatar_url: ""
+    avatar_url: "",
+    repo_url: "",
+    repos: [],
+    url: ""
   };
 
   componentDidMount() {
+    console.log("cdm");
+
     const code =
       window.location.href.match(/\?code=(.*)/) &&
       window.location.href.match(/\?code=(.*)/)[1];
@@ -37,24 +43,68 @@ class Home extends Component {
               this.setState({
                 login: response.data.login,
                 name: response.data.name,
-                avatar_url: response.data.avatar_url
+                avatar_url: response.data.avatar_url,
+                url: response.data.url,
+                repo_url: response.data.repo_url
               });
+            });
+        })
+        .then(() => {
+          axios
+            .get("https://api.github.com/users/Willrezi/repos", {
+              headers: { Authorization: "Bearer " + this.state.token }
+            })
+            .then(response => {
+              console.log("repo", response.data);
+              this.setState({ repos: response.data });
+              console.log("toto", this.state.repos);
+
+              // for (let i = 0; i < response.data.length; i++) {
+              //   console.log("wtf", response.data.length);
+              //   repos.push(<Repos key={i} name={this.response.data[i].name} />);
+              // }
             });
         });
     }
   }
 
+  //   getRepos() {
+  //     console.log(this.state);
+  //     // await this.state.login;
+  //     let repos = [];
+  //     axios
+  //       .get("https://api.github.com/users/Willrezi/repos", {
+  //         headers: { Authorization: "Bearer " + this.state.token }
+  //       })
+  //       .then(response => {
+  //         console.log("repo", response.data);
+  //         this.setState({ repo: response.data });
+  //         console.log("toto", this.state.repo);
+
+  //         // for (let i = 0; i < response.data.length; i++) {
+  //         //   console.log("wtf", response.data.length);
+  //         //   repos.push(<Repos key={i} name={this.response.data[i].name} />);
+  //         // }
+  //       });
+  //   }
+
   render() {
+    console.log("render");
+
     return (
       <Fragment>
         <div className="home-container">
-          <img
-            className="img-container"
-            src={this.state.avatar_url}
-            alt="avatar"
-          />
-          <h2 className="name-container">{this.state.name}</h2>
-          <h4 className="login-container">{this.state.login}</h4>
+          <div className="left-container">
+            {" "}
+            <img
+              className="img-container"
+              src={this.state.avatar_url}
+              alt="avatar"
+            />
+            <h2 className="name-container">{this.state.name}</h2>
+            <h4 className="login-container">{this.state.login}</h4>
+          </div>
+          <Repos repos={this.state.repos} />
         </div>
       </Fragment>
     );
