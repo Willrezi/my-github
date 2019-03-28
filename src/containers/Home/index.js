@@ -16,8 +16,6 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    console.log("cdm");
-
     const code =
       window.location.href.match(/\?code=(.*)/) &&
       window.location.href.match(/\?code=(.*)/)[1];
@@ -27,9 +25,6 @@ class Home extends Component {
         .get("https://w-github.herokuapp.com/authenticate/" + code)
         .then(response => {
           console.log("response.data", response.data);
-          //   if (response.data.token) {
-          //     localStorage.setItem("token", response.data.token);
-          //   }
           localStorage.setItem("token", response.data.token);
           this.setState({ token: response.data.token });
         })
@@ -49,48 +44,22 @@ class Home extends Component {
               });
             });
         })
-        .then(() => {
-          axios
-            .get("https://api.github.com/users/Willrezi/repos", {
-              headers: { Authorization: "Bearer " + this.state.token }
-            })
-            .then(response => {
-              console.log("repo", response.data);
-              this.setState({ repos: response.data });
-              console.log("toto", this.state.repos);
-
-              // for (let i = 0; i < response.data.length; i++) {
-              //   console.log("wtf", response.data.length);
-              //   repos.push(<Repos key={i} name={this.response.data[i].name} />);
-              // }
-            });
+        .then(async () => {
+          await setTimeout(() => {
+            axios
+              .get(this.state.url + "/repos", {
+                headers: { Authorization: "Bearer " + this.state.token }
+              })
+              .then(response => {
+                console.log("repo", response.data);
+                this.setState({ repos: response.data });
+              });
+          }, 1000);
         });
     }
   }
 
-  //   getRepos() {
-  //     console.log(this.state);
-  //     // await this.state.login;
-  //     let repos = [];
-  //     axios
-  //       .get("https://api.github.com/users/Willrezi/repos", {
-  //         headers: { Authorization: "Bearer " + this.state.token }
-  //       })
-  //       .then(response => {
-  //         console.log("repo", response.data);
-  //         this.setState({ repo: response.data });
-  //         console.log("toto", this.state.repo);
-
-  //         // for (let i = 0; i < response.data.length; i++) {
-  //         //   console.log("wtf", response.data.length);
-  //         //   repos.push(<Repos key={i} name={this.response.data[i].name} />);
-  //         // }
-  //       });
-  //   }
-
   render() {
-    console.log("render");
-
     return (
       <Fragment>
         <div className="home-container">
