@@ -14,7 +14,7 @@ class App extends Component {
           <Header />
           <Route exact path="/" component={AuthLoadingScreen} />
           <Route path="/home" component={Home} />
-          <Route path="/commit" component={Commits} />
+          <Route path="/commits" component={Commits} />
         </Fragment>
       </Router>
     );

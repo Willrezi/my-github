@@ -25,7 +25,7 @@ class Home extends Component {
         .get("https://w-github.herokuapp.com/authenticate/" + code)
         .then(response => {
           console.log("response.data", response.data);
-          localStorage.setItem("token", response.data.token);
+          sessionStorage.setItem("token", response.data.token);
           this.setState({ token: response.data.token });
         })
         .then(() => {

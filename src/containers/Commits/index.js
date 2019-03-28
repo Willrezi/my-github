@@ -23,10 +23,8 @@ class Commits extends Component {
   }
 
   render() {
-    console.log("wwww", this.props.commits);
-
     localStorage.getItem("token");
-    console.log("hhhhhhh", "token");
+    console.log("hhhhhhh", this.props.location.token);
 
     return <Fragment>{this.props.commits}</Fragment>;
   }

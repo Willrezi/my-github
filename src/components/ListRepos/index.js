@@ -11,36 +11,19 @@ class ListRepos extends Component {
     commits: []
   };
 
-  onClick = async () => {
-    await setTimeout(() => {
-      axios
-        .get(
-          "https://api.github.com/repos/Willrezi/" +
-            this.props.name +
-            "/commits"
-        )
-        .then(response => {
-          console.log(response.data);
-          this.setState({ commits: response.data });
-          console.log("coommmits", this.state.commits);
-          this.props.history.push("/commits", this.state.commits);
-        });
-    }, 500);
-  };
-
   render() {
     return (
       <Fragment>
         <div className="list-container">
-          {/* <Link
+          <Link
             to={{
               pathname: "/commits",
               repoName: this.props.name,
-              token: localStorage.getItem("token")
+              token: sessionStorage.getItem("token")
             }}
-          > */}
-          <h4 onClick={this.onClick}>{this.props.name}</h4>
-          {/* </Link> */}
+          >
+            <h4>{this.props.name}</h4>
+          </Link>
 
           <p className="description">Description : {this.props.description}</p>
           <p>

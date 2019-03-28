@@ -4,14 +4,23 @@
   font-family: "montserrat", sans-serif;
 }
 
-.list-container > h4 {
+.list-container > a {
   text-decoration: underline;
+  text-decoration-color: black;
+}
 
+h4 {
   font-size: 30px;
   cursor: pointer;
   margin-bottom: 10px;
+  color: black;
 }
 
 .description {
   font-size: 20px;
+  margin: 0;
+}
+
+p {
+  margin-bottom: 0;
 }
