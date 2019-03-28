@@ -5,7 +5,10 @@ import "./style.css";
 
 class Home extends Component {
   state = {
-    token: ""
+    token: "",
+    login: "",
+    name: "",
+    avatar_url: ""
   };
 
   componentDidMount() {
@@ -15,24 +18,46 @@ class Home extends Component {
     console.log(code);
     if (code) {
       axios
-        .post(
-          "https://github.com/login/oauth/access_token?client_id=65252bfe5bd013578e72&client_secret=6353ffd9004585a16702841c25d3154bae64f763&code=ed3425a34cc5474a951f",
-          { headers: { "Access-Control-Allow-Origin": "*" } }
-        )
+        .get("https://w-github.herokuapp.com/authenticate/" + code)
         .then(response => {
-          console.log(response.data);
+          console.log("response.data", response.data);
+          //   if (response.data.token) {
+          //     localStorage.setItem("token", response.data.token);
+          //   }
+          localStorage.setItem("token", response.data.token);
+          this.setState({ token: response.data.token });
+        })
+        .then(() => {
+          axios
+            .get("https://api.github.com/user", {
+              headers: { Authorization: "Bearer " + this.state.token }
+            })
+            .then(response => {
+              console.log(response.data);
+              this.setState({
+                login: response.data.login,
+                name: response.data.name,
+                avatar_url: response.data.avatar_url
+              });
+            });
         });
     }
-    // if (code) {
-    //   axios.get("https://api.github.com/user?code=" + code).then(response => {
-    //     console.log(response.data);
-    //     this.setState(code);
-    //   });
-    // }
   }
 
   render() {
-    return <Fragment>This is the Home component</Fragment>;
+    return (
+      <Fragment>
+        <div className="home-container">
+          <img
+            className="img-container"
+            src={this.state.avatar_url}
+            alt="avatar"
+          />
+          <h2 className="name-container">{this.state.name}</h2>
+          <h4 className="login-container">{this.state.login}</h4>
+        </div>
+      </Fragment>
+    );
   }
 }
 
