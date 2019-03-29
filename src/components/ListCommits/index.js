@@ -14,7 +14,6 @@ class ListCommits extends Component {
               "LL"
             )}
           </h4>
-          ,
           <p className="list-description">
             {this.props.list[i].commit.message}
           </p>
