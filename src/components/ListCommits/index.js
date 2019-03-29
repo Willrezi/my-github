@@ -8,10 +8,17 @@ class ListCommits extends Component {
     const listCommit = [];
     for (let i = 0; i < this.props.list.length; i++) {
       listCommit.push(
-        <h4>
-          {moment(new Date(this.props.list[i].commit.author.date)).format("LL")}
-        </h4>,
-        <p className="list-description">{this.props.list[i].commit.message}</p>
+        <div key={i}>
+          <h4>
+            {moment(new Date(this.props.list[i].commit.author.date)).format(
+              "LL"
+            )}
+          </h4>
+          ,
+          <p className="list-description">
+            {this.props.list[i].commit.message}
+          </p>
+        </div>
       );
     }
 
