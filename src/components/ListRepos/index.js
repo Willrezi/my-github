@@ -17,8 +17,7 @@ class ListRepos extends Component {
           <Link
             to={{
               pathname: "/commits",
-              repoName: this.props.name,
-              token: sessionStorage.getItem("token")
+              repoName: this.props.name
             }}
           >
             <h4>{this.props.name}</h4>

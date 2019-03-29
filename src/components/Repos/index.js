@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
 import ListRepos from "../ListRepos";
 import "./style.css";
@@ -18,12 +18,10 @@ class Repos extends Component {
       );
     }
     return (
-      <Fragment>
-        <div className="repos-title">
-          <h1>Mes repos</h1>
-          {repos}
-        </div>
-      </Fragment>
+      <div className="repos-title">
+        <h1>Mes repos</h1>
+        {repos}
+      </div>
     );
   }
 }

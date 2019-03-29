@@ -7,7 +7,7 @@ import Repos from "../../components/Repos";
 class Home extends Component {
   state = {
     code: "",
-    token: "",
+    token: sessionStorage.getItem("token"),
     login: "",
     name: "",
     avatar_url: "",
@@ -17,46 +17,35 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    const code =
-      window.location.href.match(/\?code=(.*)/) &&
-      window.location.href.match(/\?code=(.*)/)[1];
-    if (code) {
-      axios
-        .get("https://w-github.herokuapp.com/authenticate/" + code)
-        .then(response => {
-          console.log("response.data", response.data);
-          sessionStorage.setItem("token", response.data.token);
-          this.setState({ token: response.data.token });
-        })
-        .then(() => {
+    console.log("token", this.state.token);
+    axios
+      .get("https://api.github.com/user", {
+        headers: { Authorization: "Bearer " + this.state.token }
+      })
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+          login: response.data.login,
+          name: response.data.name,
+          avatar_url: response.data.avatar_url,
+          url: response.data.url,
+          repo_url: response.data.repo_url
+        });
+      })
+      // })
+      .then(async () => {
+        await setTimeout(() => {
           axios
-            .get("https://api.github.com/user", {
+            .get(this.state.url + "/repos?sort=created", {
               headers: { Authorization: "Bearer " + this.state.token }
             })
             .then(response => {
-              console.log(response.data);
-              this.setState({
-                login: response.data.login,
-                name: response.data.name,
-                avatar_url: response.data.avatar_url,
-                url: response.data.url,
-                repo_url: response.data.repo_url
-              });
+              console.log("repo", response.data);
+              this.setState({ repos: response.data });
             });
-        })
-        .then(async () => {
-          await setTimeout(() => {
-            axios
-              .get(this.state.url + "/repos?sort=created", {
-                headers: { Authorization: "Bearer " + this.state.token }
-              })
-              .then(response => {
-                console.log("repo", response.data);
-                this.setState({ repos: response.data });
-              });
-          }, 1000);
-        });
-    }
+        }, 1000);
+      });
+    // }
   }
 
   render() {

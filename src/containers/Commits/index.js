@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import "./style.css";
 import axios from "axios";
 import ListCommits from "../../components/ListCommits";
@@ -23,15 +23,11 @@ class Commits extends Component {
   }
 
   render() {
-    localStorage.getItem("token");
-
     return (
-      <Fragment>
-        <div className="commits-container">
-          <h1>Commits {this.props.location.repoName}</h1>
-          <ListCommits list={this.state.commits} />
-        </div>
-      </Fragment>
+      <div className="commits-container">
+        <h1>Commits {this.props.location.repoName}</h1>
+        <ListCommits list={this.state.commits} />
+      </div>
     );
   }
 }
